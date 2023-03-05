@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Photo Upload</h1>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h2>Photo Upload</h2>
 
-    <input id="file-upload" type="file" name="file-upload"/>
-    <button id="upload-button" onclick="uploadFile()">Upload</button>
+        <input id="fileupload" type="file" name="fileupload"/>
+        <button id="upload-button" onclick="uploadFile()">Upload</button>
 
-    <script>
-        async function uploadPhoto() {
-            let formData = new FormData();
-            formData.append("data", fileupload.files[0])
-        }
-    </script>
-</body>
+        <script>
+            async function uploadFile() {
+                const file = fileupload.files[0];
+                let formData = new FormData();
+                formData.append("data", file);
+
+                await fetch("http://localhost:8080/photos", {
+                    method: "POST",
+                    mode: "cors",
+                    body: formData
+                }).then(result => result.text()).then(text => alert(text));
+            }
+        </script>
+    </body>
 </html>
